@@ -28,7 +28,6 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng position = new LatLng(9.9778439, -84.82942109999999);
         mMap.addMarker(new MarkerOptions().position(position).title("Puntarenas"));
