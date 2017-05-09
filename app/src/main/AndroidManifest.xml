@@ -22,6 +22,9 @@
         <activity
             android:name=".actLogin"
             android:theme="@style/AppTheme.Splash" />
+        <activity
+            android:name=".actRegistro"
+            android:theme="@style/AppTheme.Splash" />
         <activity android:name=".actPrincipal" />
         <activity android:name=".actPerfil" />
         <activity
