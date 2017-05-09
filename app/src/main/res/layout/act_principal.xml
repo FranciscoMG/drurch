@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.drurch.actPrincipal">
+
+    <ImageView
+        android:id="@+id/btnBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/circulo_cerveza"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <ImageView
+        android:id="@+id/btnIglesia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/circulo_biblia"
+        tools:layout_editor_absoluteX="231dp"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <TextView
+        android:id="@+id/tvBienvenida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="172dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bar"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="345dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iglesia"
+        tools:layout_editor_absoluteX="251dp"
+        tools:layout_editor_absoluteY="345dp" />
+
+    <TextView
+        android:id="@+id/btnPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Perfil" />
+</android.support.constraint.ConstraintLayout>
