@@ -7,4 +7,10 @@
     <string name="register_text">Registrarse</string>
     <string name="name_text">Nombre</string>
     <string name="repeat_password_text">Repita la contraseña</string>
+    <string name="welcome_text">Bienvenido</string>
+    <string name="profile_text">Perfil</string>
+    <string name="bars_text">BARES</string>
+    <string name="churches_text">IGLESIAS</string>
+    <string name="modify_text">Modificar</string>
+    <string name="current_password_text">Contraseña actual</string>
 </resources>
