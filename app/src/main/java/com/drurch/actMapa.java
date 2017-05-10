@@ -1,5 +1,6 @@
 package com.drurch;
 
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -13,14 +14,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class actMapa extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private BottomSheetBehavior scroll_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_mapa);
+
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
+
+        scroll_view = BottomSheetBehavior.from(findViewById(R.id.linear_sheet));
+
+//        scroll_view.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     @Override
@@ -29,6 +36,6 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng position = new LatLng(9.9778439, -84.82942109999999);
         mMap.addMarker(new MarkerOptions().position(position).title("Puntarenas"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
     }
 }
