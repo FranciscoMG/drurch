@@ -15,4 +15,7 @@
     <string name="register_text">Registrarse</string>
     <string name="repeat_password_text">Repita la contraseña</string>
     <string name="welcome_text">Bienvenido</string>
+    <string name="modify_profile_text">Modificar Perfíl</string>
+    <string name="about_app_text">Informacion sobre drurch</string>
+    <string name="close_session_text">Cerrar sesión</string>
 </resources>

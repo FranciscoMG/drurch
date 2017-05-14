@@ -1,5 +1,6 @@
 package com.drurch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,11 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-public class actLista extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class actLista extends AppCompatActivity implements AdapterView.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     protected  DrawerLayout dlOpciones;
     protected ActionBarDrawerToggle adtLateral;
+    protected ListView lvListaLugares;
+    private baListaLugares baLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +29,23 @@ public class actLista extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.act_lista);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Iglesia o bar");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        lvListaLugares = (ListView) findViewById(R.id.lvListaLugares);
+        NavigationView nvLateral = (NavigationView) findViewById(R.id.nvLateral);
         dlOpciones = (DrawerLayout) findViewById(R.id.drawer_layout);
         adtLateral = new ActionBarDrawerToggle(this, dlOpciones, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
+        baLista = new baListaLugares(this);
+        lvListaLugares.setAdapter(baLista);
         adtLateral.setDrawerIndicatorEnabled(true);
         dlOpciones.addDrawerListener(adtLateral);
         adtLateral.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        lvListaLugares.setOnItemClickListener(this);
+        nvLateral.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -50,24 +60,24 @@ public class actLista extends AppCompatActivity implements NavigationView.OnNavi
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (item.getItemId()) {
+            case  R.id.nav_perfil: {
+                break;
+            }
+            case  R.id.nav_salir: {
+                break;
+            }
+            case  R.id.nav_acerca: {
+                startActivity(new Intent(this, actAcerca.class));
+                break;
+            }
         }
 
         dlOpciones.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 }
