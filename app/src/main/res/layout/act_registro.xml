@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="@string/email_number_id"
+            android:hint="@string/email_number_text"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:paddingBottom="8dp"

@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".actLista"
+            android:name=".actInicio"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,14 +38,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash" />
         <activity
-            android:name=".actInicio"
+            android:name=".actLista"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actMapa"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatusBar" />
         <activity
             android:name=".actAcerca"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash" />
-        <activity android:name=".actMapa" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

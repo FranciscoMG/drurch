@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">drurch</string>
 
-    <string name="action_settings">Settings</string>
     <string name="bars_text">BARS</string>
     <string name="churches_text">CHURCHES</string>
     <string name="current_password_text">Current password</string>
-    <string name="email_number_id">Email or phone</string>
+    <string name="email_number_text">Email or phone</string>
     <string name="modify_text">Modify</string>
     <string name="name_text">Name</string>
     <string name="navigation_drawer_open">Open sidebar</string>
@@ -19,4 +18,12 @@
     <string name="modify_profile_text">Modify profile</string>
     <string name="about_app_text">About drurch</string>
     <string name="close_session_text">Close session</string>
+    <string name="user_field_error">Name field is empty.</string>
+    <string name="email_number_field_error">Email or phone field is empty.</string>
+    <string name="password_field_error">Password field is empty.</string>
+    <string name="repeat_password_field_error">You must repeat the password.</string>
+    <string name="password_match_error">These passwords don\'t match.</string>
+    <string name="create_user_success">User created correctly.</string>
+    <string name="create_user_error">Has occurred an error creating the user.</string>
+    <string name="password_length_error">Password must have at least 8 characters.</string>
 </resources>

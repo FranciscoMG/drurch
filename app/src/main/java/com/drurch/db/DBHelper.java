@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import com.drurch.models.Comment;
 import com.drurch.models.Node;
@@ -67,14 +68,15 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
     // Users ---------------------------------------------------------------------------------------
-    public boolean insertUser(String email, String name, String password, String img) {
+    public boolean insertUser(String email, String name, String password, Uri img) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("name", name);
         contentValues.put("password", password);
-        contentValues.put("img", img);
+        contentValues.put("img", String.valueOf(img));
         return db.insert("users", null, contentValues) > 0;
     }
     public Cursor getUser(int id) {
@@ -178,7 +180,6 @@ public class DBHelper extends SQLiteOpenHelper {
         int usersRows = (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
         return usersRows;
     }
-
 
 
     // Comments ------------------------------------------------------------------------------------

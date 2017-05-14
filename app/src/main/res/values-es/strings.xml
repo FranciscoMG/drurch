@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="action_settings">Configuraciones</string>
     <string name="bars_text">BARES</string>
     <string name="churches_text">IGLESIAS</string>
     <string name="current_password_text">Contraseña actual</string>
-    <string name="email_number_id">Email o teléfono</string>
+    <string name="email_number_text">Email o teléfono</string>
     <string name="modify_text">Modificar</string>
     <string name="name_text">Nombre</string>
     <string name="navigation_drawer_close">Cerrar sidebar</string>
@@ -18,4 +17,12 @@
     <string name="modify_profile_text">Modificar Perfíl</string>
     <string name="about_app_text">Informacion sobre drurch</string>
     <string name="close_session_text">Cerrar sesión</string>
+    <string name="user_field_error">El campo nombre esta vacío.</string>
+    <string name="email_number_field_error">El campo email o teléfono esta vacío.</string>
+    <string name="password_field_error">El campo contraseña esta vacío.</string>
+    <string name="repeat_password_field_error">Debe repetir la contraseña.</string>
+    <string name="password_match_error">Las contraseñas no coinciden.</string>
+    <string name="create_user_success">Usuario creado correctamente.</string>
+    <string name="create_user_error">Ha ocurrido un error al crear el usuario.</string>
+    <string name="password_length_error">La contraseña debe tener 8 caracteres como mínimo.</string>
 </resources>

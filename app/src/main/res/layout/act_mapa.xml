@@ -108,7 +108,7 @@
                         android:layout_width="119dp"
                         android:layout_height="33dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/puntuacion_0"
+
                         android:textAlignment="center" />
                 </LinearLayout>
             </LinearLayout>

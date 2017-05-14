@@ -48,7 +48,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         lista_comentarios = new ArrayList<>();
         listView_comentarios = (ListView)findViewById(R.id.listView_coments);
         textView_imagen = (TextView)findViewById(R.id.textView_imagen);
-        textView_imagen.setBackgroundResource(R.drawable.puntuacion_5);
+        //textView_imagen.setBackgroundResource(R.drawable.puntuacion_5);
 
         // Inicialización de métodos
         generador_comentarios();
