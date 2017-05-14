@@ -16,4 +16,7 @@
     <string name="register_text">Register</string>
     <string name="repeat_password_text">Repeat password</string>
     <string name="welcome_text">Welcome</string>
+    <string name="modify_profile_text">Modify profile</string>
+    <string name="about_app_text">About drurch</string>
+    <string name="close_session_text">Close session</string>
 </resources>
