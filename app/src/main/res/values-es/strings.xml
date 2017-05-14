@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Configuraciones</string>
-    <string name="email_number_id">Email o teléfono</string>
-    <string name="password_text">Contraseña</string>
-    <string name="sign_in_text">Iniciar sesión</string>
-    <string name="register_text">Registrarse</string>
-    <string name="name_text">Nombre</string>
-    <string name="repeat_password_text">Repita la contraseña</string>
-    <string name="welcome_text">Bienvenido</string>
-    <string name="profile_text">Perfil</string>
     <string name="bars_text">BARES</string>
     <string name="churches_text">IGLESIAS</string>
-    <string name="modify_text">Modificar</string>
     <string name="current_password_text">Contraseña actual</string>
+    <string name="email_number_id">Email o teléfono</string>
+    <string name="modify_text">Modificar</string>
+    <string name="name_text">Nombre</string>
+    <string name="navigation_drawer_close">Cerrar sidebar</string>
+    <string name="navigation_drawer_open">Abrir sidebar</string>
+    <string name="password_text">Contraseña</string>
+    <string name="profile_text">Perfil</string>
+    <string name="sign_in_text">Iniciar sesión</string>
+    <string name="register_text">Registrarse</string>
+    <string name="repeat_password_text">Repita la contraseña</string>
+    <string name="welcome_text">Bienvenido</string>
 </resources>
