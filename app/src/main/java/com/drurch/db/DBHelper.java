@@ -94,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor response = db.rawQuery("SELECT * FROM users WHERE id=" + id + "", null);
         if (response.moveToFirst()){
             User user = new User();
+            user.setId(response.getInt(response.getColumnIndex(USER_COLUMN_ID)));
             user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
             user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
             user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
@@ -105,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public boolean checkUserCredentialsBoolean(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor response = db.rawQuery("SELECT * FROM users WHERE email=" + email + " AND password=" + password + "", null);
+        Cursor response = db.rawQuery("SELECT * FROM users WHERE email= '"+ email +"' AND password= '"+ password +"'", null);
         if (response.moveToFirst()){
             return true;
         }
@@ -113,9 +114,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public User checkUserCredentialsUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor response = db.rawQuery("SELECT * FROM users WHERE email=" + email + " AND password=" + password + "", null);
+        Cursor response = db.rawQuery("SELECT * FROM users WHERE email= '"+ email +"' AND password= '"+ password +"'", null);
         if (response.moveToFirst()){
             User user = new User();
+            user.setId(response.getInt(response.getColumnIndex(USER_COLUMN_ID)));
             user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
             user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
             user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
