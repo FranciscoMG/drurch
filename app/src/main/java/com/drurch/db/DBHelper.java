@@ -68,6 +68,13 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void down(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS users");
+        db.execSQL("DROP TABLE IF EXISTS nodes");
+        db.execSQL("DROP TABLE IF EXISTS comments");
+    }
+
     // Users ---------------------------------------------------------------------------------------
     public boolean insertUser(String email, String name, String password, String img) {
         SQLiteDatabase db = this.getWritableDatabase();
