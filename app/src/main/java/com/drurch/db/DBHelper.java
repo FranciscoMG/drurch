@@ -13,6 +13,9 @@ import com.drurch.models.Node;
 import com.drurch.models.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Vinicio on 14/5/2017.
@@ -138,9 +141,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM users", null);
         response.moveToFirst();
-        User user = new User();
 
         while (response.isAfterLast() == false) {
+            User user = new User();
             user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
             user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
             user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
@@ -207,9 +210,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM nodes", null);
         response.moveToFirst();
-        Node node = new Node();
 
         while (response.isAfterLast() == false) {
+            Node node = new Node();
             node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
             node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
             node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
@@ -227,25 +230,38 @@ public class DBHelper extends SQLiteOpenHelper {
         int usersRows = (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
         return usersRows;
     }
-    public ArrayList<Node> getNearestNodes(int type, double latitude, double longitude) {
+    public ArrayList<Node> getNearestNodes(int type, double latitude, double longitude, float limitDistance) {
         ArrayList<Node> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor response = db.rawQuery("SELECT * FROM nodes", null);
+        Cursor response = db.rawQuery("SELECT * FROM nodes WHERE type=" + type + "", null);
         response.moveToFirst();
-        Node node = new Node();
 
         while (response.isAfterLast() == false) {
-            node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
-            node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
-            node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
-            node.setLatitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)));
-            node.setLongitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
-            node.setScore(response.getInt(response.getColumnIndex(NODE_COLUMN_SCORE)));
-            node.setUser_id(response.getInt(response.getColumnIndex(NODE_COLUMN_USER)));
-//            Log.d("Distancia", "" + distantFrom(latitude, longitude, node.getLatitude(), node.getLongitude()));
-            list.add(node);
+            float distance = distantFrom(
+                    latitude,
+                    longitude,
+                    response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)),
+                    response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
+            if (distance < limitDistance) {
+                Node node = new Node();
+                node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
+                node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
+                node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
+                node.setLatitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)));
+                node.setLongitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
+                node.setScore(response.getInt(response.getColumnIndex(NODE_COLUMN_SCORE)));
+                node.setUser_id(response.getInt(response.getColumnIndex(NODE_COLUMN_USER)));
+                node.setDistance(distance);
+                list.add(node);
+            }
             response.moveToNext();
         }
+        Collections.sort(list, new Comparator<Node>() {
+            @Override
+            public int compare(Node node1, Node node2) {
+                return Float.compare(node1.getDistance(), node2.getDistance());
+            }
+        });
         return list;
     }
     private float distantFrom (double lat1, double lng1, double lat2, double lng2 )
@@ -304,9 +320,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM comments", null);
         response.moveToFirst();
-        Comment comment = new Comment();
 
         while (response.isAfterLast() == false) {
+            Comment comment = new Comment();
             comment.setDescription(response.getString(response.getColumnIndex(COMMENT_COLUMN_DESCRIPTION)));
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
