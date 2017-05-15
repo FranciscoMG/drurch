@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
+import android.util.Log;
 
 import com.drurch.models.Comment;
 import com.drurch.models.Node;
@@ -68,21 +68,50 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
     // Users ---------------------------------------------------------------------------------------
-    public boolean insertUser(String email, String name, String password, Uri img) {
+    public boolean insertUser(String email, String name, String password, String img) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("name", name);
         contentValues.put("password", password);
-        contentValues.put("img", String.valueOf(img));
+        contentValues.put("img", img);
         return db.insert("users", null, contentValues) > 0;
     }
-    public Cursor getUser(int id) {
+    public User getUser(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM users WHERE id=" + id + "", null);
-        return response;
+        if (response.moveToFirst()){
+            User user = new User();
+            user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
+            user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
+            user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
+            user.setImg(response.getString(response.getColumnIndex(USER_COLUMN_IMG)));
+            return user;
+        } else {
+            return null;
+        }
+    }
+    public boolean checkUserCredentialsBoolean(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor response = db.rawQuery("SELECT * FROM users WHERE email=" + email + " AND password=" + password + "", null);
+        if (response.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
+    public User checkUserCredentialsUser(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor response = db.rawQuery("SELECT * FROM users WHERE email=" + email + " AND password=" + password + "", null);
+        if (response.moveToFirst()){
+            User user = new User();
+            user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
+            user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
+            user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
+            user.setImg(response.getString(response.getColumnIndex(USER_COLUMN_IMG)));
+            return user;
+        }
+        return null;
     }
     public boolean updateUser(Integer id, String email, String name, String password, String img) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -134,10 +163,21 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("user_id", user_id);
         return db.insert("nodes", null, contentValues) > 0;
     }
-    public Cursor getNode(int id) {
+    public Node getNode(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM nodes WHERE id=" + id + "", null);
-        return response;
+        if (response.moveToFirst()) {
+            Node node = new Node();
+            node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
+            node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
+            node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
+            node.setLatitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)));
+            node.setLongitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
+            node.setScore(response.getInt(response.getColumnIndex(NODE_COLUMN_SCORE)));
+            node.setUser_id(response.getInt(response.getColumnIndex(NODE_COLUMN_USER)));
+            return node;
+        }
+        return null;
     }
     public boolean updateNode(Integer id, int type, String title, String description, double latitude, double longitude, int score, int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -182,6 +222,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
     // Comments ------------------------------------------------------------------------------------
     public boolean insertComment(String description, int created, int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -191,10 +232,17 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("user_id", user_id);
         return db.insert("comments", null, contentValues) > 0;
     }
-    public Cursor getComment(int id) {
+    public Comment getComment(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM comments WHERE id=" + id + "", null);
-        return response;
+        if(response.moveToFirst()) {
+            Comment comment = new Comment();
+            comment.setDescription(response.getString(response.getColumnIndex(COMMENT_COLUMN_DESCRIPTION)));
+            comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
+            comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
+            return comment;
+        }
+        return null;
     }
     public boolean updateComment(Integer id, String description, int created, int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
