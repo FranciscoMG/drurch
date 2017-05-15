@@ -16,6 +16,8 @@ public class Node implements Parcelable {
     private Double longitude;
     private int score;
     private int user_id;
+    private float distance;
+
 
     protected Node(Parcel in) {
         type = in.readInt();
@@ -23,6 +25,7 @@ public class Node implements Parcelable {
         description = in.readString();
         score = in.readInt();
         user_id = in.readInt();
+        distance = in.readFloat();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class Node implements Parcelable {
         dest.writeString(description);
         dest.writeInt(score);
         dest.writeInt(user_id);
+        dest.writeFloat(distance);
     }
 
     @Override
@@ -51,10 +55,7 @@ public class Node implements Parcelable {
         }
     };
 
-    public Node() {
-    }
-
-    public Node(int type, String title, String description, Double latitude, Double longitude, int score, int user_id) {
+    public Node(int type, String title, String description, Double latitude, Double longitude, int score, int user_id, float distance) {
         this.type = type;
         this.title = title;
         this.description = description;
@@ -62,6 +63,10 @@ public class Node implements Parcelable {
         this.longitude = longitude;
         this.score = score;
         this.user_id = user_id;
+        this.distance = distance;
+    }
+
+    public Node() {
     }
 
     public int getType() {
@@ -118,6 +123,14 @@ public class Node implements Parcelable {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public static Creator<Node> getCREATOR() {
