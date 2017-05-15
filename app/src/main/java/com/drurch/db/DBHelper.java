@@ -68,11 +68,11 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void down(){
+    public void truncate(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS users");
-        db.execSQL("DROP TABLE IF EXISTS nodes");
-        db.execSQL("DROP TABLE IF EXISTS comments");
+        db.execSQL("DELETE FROM users");
+        db.execSQL("DELETE FROM nodes");
+        db.execSQL("DELETE FROM comments");
     }
 
     // Users ---------------------------------------------------------------------------------------
@@ -226,6 +226,42 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         int usersRows = (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
         return usersRows;
+    }
+    public ArrayList<Node> getNearestNodes(int type, double latitude, double longitude) {
+        ArrayList<Node> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor response = db.rawQuery("SELECT * FROM nodes", null);
+        response.moveToFirst();
+        Node node = new Node();
+
+        while (response.isAfterLast() == false) {
+            node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
+            node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
+            node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
+            node.setLatitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)));
+            node.setLongitude(response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
+            node.setScore(response.getInt(response.getColumnIndex(NODE_COLUMN_SCORE)));
+            node.setUser_id(response.getInt(response.getColumnIndex(NODE_COLUMN_USER)));
+//            Log.d("Distancia", "" + distantFrom(latitude, longitude, node.getLatitude(), node.getLongitude()));
+            list.add(node);
+            response.moveToNext();
+        }
+        return list;
+    }
+    private float distantFrom (double lat1, double lng1, double lat2, double lng2 )
+    {
+        double earthRadius = 3958.75;
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double dist = earthRadius * c;
+
+        int meterConversion = 1609;
+
+        return new Float(dist * meterConversion).floatValue();
     }
 
 

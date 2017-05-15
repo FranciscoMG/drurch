@@ -17,7 +17,7 @@ public class DBSeeder {
     }
 
     private void down(){
-        dbHelper.down();
+        dbHelper.truncate();
     }
     public void seedUsers() {
         for (int i = 0; i < 10; i++) {
