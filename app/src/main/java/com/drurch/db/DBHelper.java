@@ -230,7 +230,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int usersRows = (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
         return usersRows;
     }
-    public ArrayList<Node> getNearestNodes(int type, double latitude, double longitude, float limitDistance) {
+    public ArrayList<Node> getNearestNodes(int type, double latitude, double longitude, float distanceInMeters) {
         ArrayList<Node> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor response = db.rawQuery("SELECT * FROM nodes WHERE type=" + type + "", null);
@@ -242,7 +242,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     longitude,
                     response.getDouble(response.getColumnIndex(NODE_COLUMN_LATITUDE)),
                     response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
-            if (distance < limitDistance) {
+            if (distance < distanceInMeters) {
                 Node node = new Node();
                 node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
                 node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
