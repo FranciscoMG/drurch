@@ -9,6 +9,7 @@ import android.os.Parcelable;
 
 public class Node implements Parcelable {
 
+    private int id;
     private int type;
     private String title;
     private String description;
@@ -20,6 +21,7 @@ public class Node implements Parcelable {
 
 
     protected Node(Parcel in) {
+        id = in.readInt();
         type = in.readInt();
         title = in.readString();
         description = in.readString();
@@ -30,6 +32,7 @@ public class Node implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeInt(type);
         dest.writeString(title);
         dest.writeString(description);
@@ -55,7 +58,8 @@ public class Node implements Parcelable {
         }
     };
 
-    public Node(int type, String title, String description, Double latitude, Double longitude, int score, int user_id, float distance) {
+    public Node(int id, int type, String title, String description, Double latitude, Double longitude, int score, int user_id, float distance) {
+        this.id = id;
         this.type = type;
         this.title = title;
         this.description = description;
@@ -67,6 +71,14 @@ public class Node implements Parcelable {
     }
 
     public Node() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getType() {

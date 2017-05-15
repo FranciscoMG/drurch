@@ -9,20 +9,27 @@ import android.os.Parcelable;
 
 public class Comment implements Parcelable {
 
+    private int id;
     private String description;
     private int created;
+    private int node_id;
     private int user_id;
 
+
     protected Comment(Parcel in) {
+        id = in.readInt();
         description = in.readString();
         created = in.readInt();
+        node_id = in.readInt();
         user_id = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(description);
         dest.writeInt(created);
+        dest.writeInt(node_id);
         dest.writeInt(user_id);
     }
 
@@ -43,13 +50,23 @@ public class Comment implements Parcelable {
         }
     };
 
+    public Comment(int id, String description, int created, int node_id, int user_id) {
+        this.id = id;
+        this.description = description;
+        this.created = created;
+        this.node_id = node_id;
+        this.user_id = user_id;
+    }
+
     public Comment() {
     }
 
-    public Comment(String description, int created, int user_id) {
-        this.description = description;
-        this.created = created;
-        this.user_id = user_id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -68,6 +85,14 @@ public class Comment implements Parcelable {
         this.created = created;
     }
 
+    public int getNode_id() {
+        return node_id;
+    }
+
+    public void setNode_id(int node_id) {
+        this.node_id = node_id;
+    }
+
     public int getUser_id() {
         return user_id;
     }
@@ -78,5 +103,10 @@ public class Comment implements Parcelable {
 
     public static Creator<Comment> getCREATOR() {
         return CREATOR;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 }
