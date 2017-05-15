@@ -50,10 +50,10 @@ public class DBSeeder {
     }
     public void seedComments(){
         for (int i = 0; i < 50; i++) {
-            dbHelper.insertComment("description"+i, 1233+i, 1);
+            dbHelper.insertComment("description"+i, 1233+i, 1, (int)(Math.random() * 10));
         }
         for (int i = 0; i < 50; i++) {
-            dbHelper.insertComment("description"+i, 1233+i, 2);
+            dbHelper.insertComment("description"+i, 1233+i, 2, (int)(Math.random() * 10));
         }
     }
     public void up(){

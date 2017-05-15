@@ -51,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COMMENT_COLUMN_DESCRIPTION = "description";
     public static final String COMMENT_COLUMN_CREATED = "created";
     public static final String COMMENT_COLUMN_USER = "user_id";
+    public static final String COMMENT_COLUMN_NODE = "node_id";
 
 
     public DBHelper(Context context) {
@@ -60,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, name TEXT, password TEXT, img TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS nodes(id INTEGER PRIMARY KEY AUTOINCREMENT, type INTEGER, title TEXT, description TEXT, latitude DOUBLE, longitude DOUBLE, score INTEGER, user_id INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS comments(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, created INTEGER, user_id INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS comments(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, created INTEGER, user_id INTEGER, node_id INTEGER);");
     }
 
     @Override
@@ -144,6 +145,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         while (response.isAfterLast() == false) {
             User user = new User();
+            user.setId(response.getInt(response.getColumnIndex(USER_COLUMN_ID)));
             user.setEmail(response.getString(response.getColumnIndex(USER_COLUMN_EMAIL)));
             user.setName(response.getString(response.getColumnIndex(USER_COLUMN_NAME)));
             user.setPassword(response.getString(response.getColumnIndex(USER_COLUMN_PASSWORD)));
@@ -178,6 +180,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor response = db.rawQuery("SELECT * FROM nodes WHERE id=" + id + "", null);
         if (response.moveToFirst()) {
             Node node = new Node();
+            node.setId(response.getInt(response.getColumnIndex(NODE_COLUMN_ID)));
             node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
             node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
             node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
@@ -213,6 +216,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         while (response.isAfterLast() == false) {
             Node node = new Node();
+            node.setId(response.getInt(response.getColumnIndex(NODE_COLUMN_ID)));
             node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
             node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
             node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
@@ -244,6 +248,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     response.getDouble(response.getColumnIndex(NODE_COLUMN_LONGITUDE)));
             if (distance < distanceInMeters) {
                 Node node = new Node();
+                node.setId(response.getInt(response.getColumnIndex(NODE_COLUMN_ID)));
                 node.setTitle(response.getString(response.getColumnIndex(NODE_COLUMN_TITLE)));
                 node.setType(response.getInt(response.getColumnIndex(NODE_COLUMN_TYPE)));
                 node.setDescription(response.getString(response.getColumnIndex(NODE_COLUMN_DESCRIPTION)));
@@ -283,12 +288,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     // Comments ------------------------------------------------------------------------------------
-    public boolean insertComment(String description, int created, int user_id) {
+    public boolean insertComment(String description, int created, int user_id, int node_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("description", description);
         contentValues.put("created", created);
         contentValues.put("user_id", user_id);
+        contentValues.put("node_id", node_id);
         return db.insert("comments", null, contentValues) > 0;
     }
     public Comment getComment(int id) {
@@ -296,19 +302,22 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor response = db.rawQuery("SELECT * FROM comments WHERE id=" + id + "", null);
         if(response.moveToFirst()) {
             Comment comment = new Comment();
+            comment.setId(response.getInt(response.getColumnIndex(COMMENT_COLUMN_ID)));
             comment.setDescription(response.getString(response.getColumnIndex(COMMENT_COLUMN_DESCRIPTION)));
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
+            comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
             return comment;
         }
         return null;
     }
-    public boolean updateComment(Integer id, String description, int created, int user_id) {
+    public boolean updateComment(Integer id, String description, int created, int user_id, int node_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("description", description);
         contentValues.put("created", created);
         contentValues.put("user_id", user_id);
+        contentValues.put("node_id", node_id);
         return db.update("comments", contentValues, "id = ?", new String[]{Integer.toString(id)}) > 0;
     }
     public boolean deleteComment(Integer id) {
@@ -323,9 +332,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
         while (response.isAfterLast() == false) {
             Comment comment = new Comment();
+            comment.setId(response.getInt(response.getColumnIndex(COMMENT_COLUMN_ID)));
             comment.setDescription(response.getString(response.getColumnIndex(COMMENT_COLUMN_DESCRIPTION)));
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
+            comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
+            list.add(comment);
+            response.moveToNext();
+        }
+        return list;
+    }
+    public ArrayList<Comment> getCommentsByNode(int node_id) {
+        ArrayList<Comment> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor response = db.rawQuery("SELECT * FROM comments WHERE node_id = " + node_id + "", null);
+        response.moveToFirst();
+
+        while (response.isAfterLast() == false) {
+            Comment comment = new Comment();
+            comment.setId(response.getInt(response.getColumnIndex(COMMENT_COLUMN_ID)));
+            comment.setDescription(response.getString(response.getColumnIndex(COMMENT_COLUMN_DESCRIPTION)));
+            comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
+            comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
+            comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
             list.add(comment);
             response.moveToNext();
         }
