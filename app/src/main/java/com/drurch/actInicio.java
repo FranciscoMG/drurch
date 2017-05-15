@@ -14,8 +14,13 @@ public class actInicio extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(actInicio.this, actLogin.class));
-                finish();
+                if (spPreferencias.obtenerSesion(actInicio.this, "user_id", -1) != -1) {
+                    startActivity(new Intent(actInicio.this, actPrincipal.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(actInicio.this, actIngreso.class));
+                    finish();
+                }
             }
         }, 3000);
     }

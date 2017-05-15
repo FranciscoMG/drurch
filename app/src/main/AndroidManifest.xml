@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".actLogin"
+            android:name=".actIngreso"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash" />
         <activity

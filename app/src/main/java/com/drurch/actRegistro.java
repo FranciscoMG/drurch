@@ -11,12 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drurch.db.DBHelper;
+import com.drurch.models.User;
 
 public class actRegistro extends AppCompatActivity implements View.OnClickListener {
 
     protected EditText etNombreRegistro, etCorreoTelefonoRegistro, etContrasenaRegistro, etRepetirContrasenaRegistro;
     protected TextView tvRegistrarse;
-    protected Uri uRutaFoto;
+    protected String uRutaFoto;
     private DBHelper dbDrurch;
 
     @Override
@@ -45,7 +46,7 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(this, R.string.email_number_field_error, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (TextUtils.isEmpty(etContrasenaRegistro.getText().toString().trim())) {
+            if (TextUtils.isEmpty(etContrasenaRegistro.getText().toString())) {
                 Toast.makeText(this, R.string.password_field_error, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -53,7 +54,7 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(this, R.string.password_length_error, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (TextUtils.isEmpty(etRepetirContrasenaRegistro.getText().toString().trim())) {
+            if (TextUtils.isEmpty(etRepetirContrasenaRegistro.getText().toString())) {
                 Toast.makeText(this, R.string.repeat_password_field_error, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -62,11 +63,13 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
                 return;
             }
 
-            if (dbDrurch.insertUser(etNombreRegistro.getText().toString(), etCorreoTelefonoRegistro.getText().toString(), etContrasenaRegistro.getText().toString(), uRutaFoto)) {
-                spPreferencias.guardarSesion(this, "user_id", -1);
-                Toast.makeText(this, R.string.create_user_success, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, actPrincipal.class));
-                finish();
+            if (dbDrurch.insertUser(etCorreoTelefonoRegistro.getText().toString().trim(), etNombreRegistro.getText().toString(), etContrasenaRegistro.getText().toString(), uRutaFoto)) {
+                User usuario = dbDrurch.checkUserCredentialsUser(etCorreoTelefonoRegistro.getText().toString().trim(), etContrasenaRegistro.getText().toString());
+                if (usuario != null) {
+                    spPreferencias.guardarSesion(this, "user_id", usuario.getId());
+                    startActivity(new Intent(this, actPrincipal.class));
+                    finish();
+                }
                 return;
             }
 

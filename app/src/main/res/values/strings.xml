@@ -26,4 +26,5 @@
     <string name="create_user_success">User created correctly.</string>
     <string name="create_user_error">Has occurred an error creating the user.</string>
     <string name="password_length_error">Password must have at least 8 characters.</string>
+    <string name="user_password_error">Invalid username/password combination.</string>
 </resources>
