@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">drurch</string>
+    <string name="app_name" translatable="false">Drurch</string>
 
     <string name="bars_text">BARS</string>
     <string name="churches_text">CHURCHES</string>

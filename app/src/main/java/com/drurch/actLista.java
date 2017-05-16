@@ -195,6 +195,7 @@ public class actLista extends AppCompatActivity implements
                 .setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        finish();
                     }
                 });
         dialog.show();
