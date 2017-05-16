@@ -180,7 +180,7 @@ public class actLista extends AppCompatActivity implements
         return isLocationEnabled();
     }
     private boolean isLocationEnabled() {
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
     private void showAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
