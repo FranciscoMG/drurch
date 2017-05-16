@@ -97,9 +97,9 @@ public class actLista extends AppCompatActivity implements
 
         // Location
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
         if(checkLocation()){
-            Criteria criteria = new Criteria();
-            provider = locationManager.getBestProvider(criteria, false);
             Location location = locationManager.getLastKnownLocation(provider);
         }
         //
@@ -198,6 +198,7 @@ public class actLista extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 
     /* Remove the locationlistener updates when Activity is paused */
@@ -234,6 +235,7 @@ public class actLista extends AppCompatActivity implements
     public void onProviderDisabled(String provider) {
         Toast.makeText(this, "Disabled provider " + provider,
                 Toast.LENGTH_SHORT).show();
+        checkLocation();
     }
 
     // \ Location
