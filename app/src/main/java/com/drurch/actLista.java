@@ -47,7 +47,7 @@ public class actLista extends AppCompatActivity implements
     protected ActionBarDrawerToggle adtLateral;
     protected ListView lvListaLugares;
     protected ImageView ivImagen;
-    protected TextView tvNombre, tvCorreoTelefono;
+    protected TextView tvNombre, tvCorreoTelefono, textView_cargando;
     private View vInfoUsuario;
     private baListaLugares baLista;
     private User usuarioActual;
@@ -84,6 +84,7 @@ public class actLista extends AppCompatActivity implements
         adtLateral = new ActionBarDrawerToggle(this, dlOpciones, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         ivImagen = (ImageView) vInfoUsuario.findViewById(R.id.ivImagen);
         tvNombre = (TextView) vInfoUsuario.findViewById(R.id.tvNombre);
+        textView_cargando = (TextView)findViewById(R.id.TextView_cargando);
         tvCorreoTelefono = (TextView) vInfoUsuario.findViewById(R.id.tvCorreoTelefono);
 
         // Nodes list
@@ -173,8 +174,7 @@ public class actLista extends AppCompatActivity implements
         return isLocationEnabled();
     }
     private boolean isLocationEnabled() {
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
     private void showAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -213,6 +213,7 @@ public class actLista extends AppCompatActivity implements
         longitudeBest = location.getLongitude();
         //
         nodeList = dbHelper.getNearestNodes(nodeType, latitudeBest, longitudeBest, distance);
+        textView_cargando.setText("");
         baLista = new baListaLugares(this, nodeList);
         lvListaLugares.setAdapter(baLista);
         //
@@ -236,6 +237,7 @@ public class actLista extends AppCompatActivity implements
         Toast.makeText(this, "Disabled provider " + provider,
                 Toast.LENGTH_SHORT).show();
         checkLocation();
+        textView_cargando.setText("Cargando...");
     }
 
     // \ Location

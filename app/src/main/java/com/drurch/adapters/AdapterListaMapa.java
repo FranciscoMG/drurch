@@ -64,7 +64,7 @@ public class AdapterListaMapa extends BaseAdapter {
             imageView_lista_imagen.setImageResource(R.drawable.persona_perfil_negro);
         }
         //
-        textView_lista_comment_descripcion.setText(comments.get(position).getUser_name()+" : "+comments.get(position).getDescription());
+        textView_lista_comment_descripcion.setText(comments.get(position).getId()+comments.get(position).getUser_name()+" : "+comments.get(position).getDescription());
 
         return convertView;
     }

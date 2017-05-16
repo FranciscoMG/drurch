@@ -357,7 +357,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Comment> getCommentsByNode(int node_id) {
         ArrayList<Comment> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor response = db.rawQuery("SELECT * FROM comments WHERE node_id = " + node_id + " ORDER BY created", null);
+        Cursor response = db.rawQuery("SELECT * FROM comments WHERE node_id = " + node_id + " ORDER BY id DESC", null);
         response.moveToFirst();
 
         while (response.isAfterLast() == false) {
