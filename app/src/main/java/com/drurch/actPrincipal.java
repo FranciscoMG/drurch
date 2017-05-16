@@ -1,6 +1,10 @@
 package com.drurch;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +44,13 @@ public class actPrincipal extends AppCompatActivity implements View.OnClickListe
         if (usuarioActual != null) {
             tvNombre.setText(usuarioActual.getName());
         }
+
+        int estadoPermiso = 1;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, estadoPermiso);
+        } else {
+            estadoPermiso = PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     @Override
@@ -50,11 +61,15 @@ public class actPrincipal extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btnBar: case R.id.tvBar: {
-
+                Intent iLista = new Intent(this, actLista.class);
+                iLista.putExtra("tipoLista", 1);
+                startActivity(iLista);
                 break;
             }
             case R.id.btnIglesia: case R.id.tvIglesia: {
-
+                Intent iLista = new Intent(this, actLista.class);
+                iLista.putExtra("tipoLista", 2);
+                startActivity(iLista);
                 break;
             }
         }

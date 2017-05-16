@@ -4,10 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Environment;
@@ -31,7 +28,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 
 public class actPerfil extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,7 +53,9 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
 
         usuarioActual = new DBHelper(this).getUser(spPreferencias.obtenerSesion(this, "user_id", -1));
         if (usuarioActual != null) {
-            if (usuarioActual.getImg() == null) {
+            try {
+                ivImagenPerfil.setImageBitmap(hacerCirculoImagen(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(usuarioActual.getImg()))));
+            } catch (IOException e) {
                 ivImagenPerfil.setImageResource(R.drawable.persona_perfil);
             }
             etNombreRegistro.setText(usuarioActual.getName());

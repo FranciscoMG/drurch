@@ -32,4 +32,7 @@
     <string name="gallery_text">Galería</string>
     <string name="camera_text">Cámara</string>
     <string name="upload_photo_error">Ha ocurrido un error al subir la foto.</string>
+    <string name="gps_dialog_error">La configuración de la ubicación está desactivada. Por favor, habilítela para usar esta aplicación.</string>
+    <string name="cancel_text">Cancelar</string>
+    <string name="enable_text">Habilitar</string>
 </resources>

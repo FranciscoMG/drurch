@@ -33,4 +33,7 @@
     <string name="gallery_text">Gallery</string>
     <string name="camera_text">Camera</string>
     <string name="upload_photo_error">Has occurred an error uploading the photo.</string>
+    <string name="gps_dialog_error">Your Location Settings is \'Off\'. Please enable it to use this app.</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="enable_text">Enable</string>
 </resources>
