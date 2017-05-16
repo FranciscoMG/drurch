@@ -18,14 +18,13 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary" />
 
-        <TextView
-            android:id="@+id/TextView_cargando"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Cargando..."
-            android:textSize="18sp" />
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
     </android.support.design.widget.AppBarLayout>
 

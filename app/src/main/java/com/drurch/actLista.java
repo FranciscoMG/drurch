@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class actLista extends AppCompatActivity implements
     protected ListView lvListaLugares;
     protected ImageView ivImagen;
     protected TextView tvNombre, tvCorreoTelefono, textView_cargando;
+    private ProgressBar spinner;
+
     private View vInfoUsuario;
     private baListaLugares baLista;
     private User usuarioActual;
@@ -84,8 +87,11 @@ public class actLista extends AppCompatActivity implements
         adtLateral = new ActionBarDrawerToggle(this, dlOpciones, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         ivImagen = (ImageView) vInfoUsuario.findViewById(R.id.ivImagen);
         tvNombre = (TextView) vInfoUsuario.findViewById(R.id.tvNombre);
-        textView_cargando = (TextView)findViewById(R.id.TextView_cargando);
+//        textView_cargando = (TextView)findViewById(R.id.TextView_cargando);
         tvCorreoTelefono = (TextView) vInfoUsuario.findViewById(R.id.tvCorreoTelefono);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.VISIBLE);
+
 
         // Nodes list
         nodeList = new ArrayList<>();
@@ -213,7 +219,7 @@ public class actLista extends AppCompatActivity implements
         longitudeBest = location.getLongitude();
         //
         nodeList = dbHelper.getNearestNodes(nodeType, latitudeBest, longitudeBest, distance);
-        textView_cargando.setText("");
+        spinner.setVisibility(View.GONE);
         baLista = new baListaLugares(this, nodeList);
         lvListaLugares.setAdapter(baLista);
         //
@@ -237,7 +243,7 @@ public class actLista extends AppCompatActivity implements
         Toast.makeText(this, "Disabled provider " + provider,
                 Toast.LENGTH_SHORT).show();
         checkLocation();
-        textView_cargando.setText("Cargando...");
+        spinner.setVisibility(View.VISIBLE);
     }
 
     // \ Location
