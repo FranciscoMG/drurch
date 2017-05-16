@@ -21,7 +21,7 @@ public class DBSeeder {
     }
     public void seedUsers() {
         for (int i = 0; i < 10; i++) {
-            dbHelper.insertUser("email" + i, "name" + i, "password" + i, "img" + i);
+            dbHelper.insertUser("email" + i, "name" + i, "password" + i, null);
         }
     }
     public void seedNodes(){

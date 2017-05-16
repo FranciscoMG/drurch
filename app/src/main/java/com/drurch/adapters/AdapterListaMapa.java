@@ -53,7 +53,16 @@ public class AdapterListaMapa extends BaseAdapter {
         TextView textView_lista_comment_descripcion = (TextView) convertView.findViewById(R.id.textView_lista_comment_descripcion);
 
         // TODO: add user image
-        imageView_lista_imagen.setImageResource(R.drawable.persona_perfil_negro);
+        String img = comments.get(position).getImg();
+        if (img != null){
+            if(img != ""){
+                imageView_lista_imagen.setImageURI(Uri.parse(img));
+            } else {
+                imageView_lista_imagen.setImageResource(R.drawable.persona_perfil_negro);
+            }
+        } else {
+            imageView_lista_imagen.setImageResource(R.drawable.persona_perfil_negro);
+        }
         //
         textView_lista_comment_descripcion.setText(comments.get(position).getUser_name()+" : "+comments.get(position).getDescription());
 

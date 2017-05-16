@@ -6,11 +6,16 @@ import android.net.Uri;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +26,7 @@ import com.drurch.db.DBSeeder;
 import com.drurch.models.Comentario;
 import com.drurch.models.Comment;
 import com.drurch.models.Node;
+import com.drurch.models.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -29,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class actMapa extends FragmentActivity implements OnMapReadyCallback {
 
@@ -40,9 +47,13 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
     private TextView node_title;
     private TextView node_decription;
     private TextView textView_imagen;
+    private EditText editText_nuevo_comentario;
+    private Button button_agregar;
     private DBHelper dbHelper;
     private Node node;
     private AdapterListaMapa adapterListaMapa;
+    private User usuarioActual;
+    private int node_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,8 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
+        //avoid automatically appear android keyboard when activity start
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         // Inicialización de avriables
         scroll_view = BottomSheetBehavior.from(findViewById(R.id.linear_sheet));
@@ -62,9 +75,12 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         textView_imagen = (TextView)findViewById(R.id.textView_imagen);
         node_title = (TextView)findViewById(R.id.node_title);
         node_decription = (TextView)findViewById(R.id.node_description);
+        editText_nuevo_comentario = (EditText)findViewById(R.id.editText_agregar_nuevo_comentario);
+        button_agregar = (Button)findViewById(R.id.button_agregar);
+        usuarioActual = new DBHelper(this).getUser(spPreferencias.obtenerSesion(this, "user_id", -1));
 
         // TODO: get the node id from the intent
-        int node_id = 0;
+        node_id = 0;
         if(getIntent().hasExtra("node_id")) {
             node_id = getIntent().getIntExtra("node_id", 0);
         }
@@ -82,13 +98,26 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
             textView_imagen.setBackgroundResource(getImageInt(node.getScore()));
             //
             lista_comentarios = dbHelper.getCommentsByNode(node_id);
-//            adapter_comentarios = new ArrayAdapter<>(actMapa.this, android.R.layout.simple_list_item_1, lista_comentarios);
             adapterListaMapa = new AdapterListaMapa(getApplicationContext(), lista_comentarios);
             listView_comentarios.setAdapter(adapterListaMapa);
         }
 
-
-//        scroll_view.setState(BottomSheetBehavior.STATE_HIDDEN);
+        button_agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(editText_nuevo_comentario.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Agregue texto al comentario", Toast.LENGTH_SHORT).show();
+                } else {
+                    Date currentDate = new Date();
+                    int unix = (int)currentDate.getTime() / 1000;
+                    dbHelper.insertComment(editText_nuevo_comentario.getText().toString(), unix , usuarioActual.getId(), node_id);
+                    lista_comentarios = dbHelper.getCommentsByNode(node_id);
+                    adapterListaMapa = new AdapterListaMapa(getApplicationContext(), lista_comentarios);
+                    listView_comentarios.setAdapter(adapterListaMapa);
+                    editText_nuevo_comentario.setText("");
+                }
+            }
+        });
     }
 
     // Mapa ////////////////////////////////////////////////////////////////////////////////////////
