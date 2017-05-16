@@ -55,7 +55,7 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
         if (usuarioActual != null) {
             try {
                 ivImagenPerfil.setImageBitmap(hacerCirculoImagen(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(usuarioActual.getImg()))));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 ivImagenPerfil.setImageResource(R.drawable.persona_perfil);
             }
             etNombreRegistro.setText(usuarioActual.getName());
@@ -68,6 +68,7 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        String contrasenaTemp;
         switch (v.getId()) {
             case R.id.ivImagenPerfil: case R.id.fabCambiarImagen: {
                 AlertDialog.Builder adEscogerImagen = new AlertDialog.Builder(this);
@@ -115,7 +116,13 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
                     return;
                 }
 
-                if (new DBHelper(this).updateUser(usuarioActual.getId(), usuarioActual.getEmail(), etNombreRegistro.getText().toString(), etContrasenaModificar.getText().toString(), uRutaFoto)) {
+                if (TextUtils.isEmpty(etContrasenaModificar.getText().toString()))
+                    contrasenaTemp = usuarioActual.getPassword();
+                else
+                    contrasenaTemp = etContrasenaModificar.getText().toString();
+
+
+                if (new DBHelper(this).updateUser(usuarioActual.getId(), usuarioActual.getEmail(), etNombreRegistro.getText().toString(), contrasenaTemp, uRutaFoto)) {
                     startActivity(new Intent(this, actPrincipal.class));
                     finish();
                     return;

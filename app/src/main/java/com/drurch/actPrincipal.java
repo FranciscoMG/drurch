@@ -51,6 +51,12 @@ public class actPrincipal extends AppCompatActivity implements View.OnClickListe
         } else {
             estadoPermiso = PackageManager.PERMISSION_GRANTED;
         }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, estadoPermiso);
+        } else {
+            estadoPermiso = PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     @Override
