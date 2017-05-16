@@ -1,6 +1,8 @@
 package com.drurch;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,31 +10,38 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.drurch.models.Node;
+
+import java.util.ArrayList;
+
 /**
  * Created by fmele on 14/5/2017.
  */
 
 public class baListaLugares extends BaseAdapter {
     Context appContext;
+    ArrayList<Node> nodes;
 
 
-    public baListaLugares(Context context) {
+    public baListaLugares(Context context, ArrayList<Node> nodes) {
+
         this.appContext = context;
+        this.nodes = nodes;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return nodes.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return nodes.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -45,6 +54,10 @@ public class baListaLugares extends BaseAdapter {
         ImageView ivInflateImagen = (ImageView) convertView.findViewById(R.id.ivImagen);
         TextView tvInflateNombre = (TextView) convertView.findViewById(R.id.tvNombre);
         TextView tvInflateDescripcion = (TextView) convertView.findViewById(R.id.tvDescripcion);
+
+        ivInflateImagen.setImageURI(Uri.parse(""));
+        tvInflateNombre.setText(nodes.get(position).getTitle());
+        tvInflateDescripcion.setText(nodes.get(position).getDescription());
 
         return convertView;
     }
