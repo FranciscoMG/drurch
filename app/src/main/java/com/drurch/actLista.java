@@ -131,6 +131,9 @@ public class actLista extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i = new Intent(actLista.this, actMapa.class);
+        i.putExtra("node_id", nodeList.get(position).getId());
+        startActivity(i);
     }
 
     // Locations

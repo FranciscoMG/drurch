@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.drurch.adapters.AdapterListaMapa;
 import com.drurch.db.DBHelper;
 import com.drurch.db.DBSeeder;
 import com.drurch.models.Comentario;
@@ -41,6 +42,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
     private TextView textView_imagen;
     private DBHelper dbHelper;
     private Node node;
+    private AdapterListaMapa adapterListaMapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,10 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         node_decription = (TextView)findViewById(R.id.node_description);
 
         // TODO: get the node id from the intent
-        int node_id = 2;
+        int node_id = 0;
+        if(getIntent().hasExtra("node_id")) {
+            node_id = getIntent().getIntExtra("node_id", 0);
+        }
 
         //
 //        DBSeeder dbSeeder = new DBSeeder(getApplicationContext());
@@ -77,8 +82,9 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
             textView_imagen.setBackgroundResource(getImageInt(node.getScore()));
             //
             lista_comentarios = dbHelper.getCommentsByNode(node_id);
-            adapter_comentarios = new ArrayAdapter<>(actMapa.this, android.R.layout.simple_list_item_1, lista_comentarios);
-            listView_comentarios.setAdapter(adapter_comentarios);
+//            adapter_comentarios = new ArrayAdapter<>(actMapa.this, android.R.layout.simple_list_item_1, lista_comentarios);
+            adapterListaMapa = new AdapterListaMapa(getApplicationContext(), lista_comentarios);
+            listView_comentarios.setAdapter(adapterListaMapa);
         }
 
 

@@ -309,6 +309,11 @@ public class DBHelper extends SQLiteOpenHelper {
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
             comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
+            if(comment.getUser_id() < 0){
+                comment.setImg("");
+            } else {
+                comment.setImg(getUser(comment.getUser_id()).getImg());
+            }
             return comment;
         }
         return null;
@@ -339,6 +344,11 @@ public class DBHelper extends SQLiteOpenHelper {
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
             comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
+            if(comment.getUser_id() < 0){
+                comment.setImg("");
+            } else {
+                comment.setImg(getUser(comment.getUser_id()).getImg());
+            }
             list.add(comment);
             response.moveToNext();
         }
@@ -347,7 +357,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Comment> getCommentsByNode(int node_id) {
         ArrayList<Comment> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor response = db.rawQuery("SELECT * FROM comments WHERE node_id = " + node_id + "", null);
+        Cursor response = db.rawQuery("SELECT * FROM comments WHERE node_id = " + node_id + " ORDER BY created", null);
         response.moveToFirst();
 
         while (response.isAfterLast() == false) {
@@ -357,6 +367,13 @@ public class DBHelper extends SQLiteOpenHelper {
             comment.setCreated(response.getInt(response.getColumnIndex(COMMENT_COLUMN_CREATED)));
             comment.setUser_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_USER)));
             comment.setNode_id(response.getInt(response.getColumnIndex(COMMENT_COLUMN_NODE)));
+            if(comment.getUser_id() < 0){
+                comment.setImg("");
+                comment.setUser_name("");
+            } else {
+                comment.setImg(getUser(comment.getUser_id()).getImg());
+                comment.setUser_name(getUser(comment.getUser_id()).getName());
+            }
             list.add(comment);
             response.moveToNext();
         }
