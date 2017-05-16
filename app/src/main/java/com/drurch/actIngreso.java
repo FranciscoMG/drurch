@@ -16,14 +16,12 @@ public class actIngreso extends AppCompatActivity implements View.OnClickListene
 
     protected EditText etCorreoTelefono, etContrasena;
     protected TextView tvIniciarSesion, tvRegistrarse;
-    private DBHelper dbDrurch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_ingreso);
 
-        dbDrurch = new DBHelper(this);
         etCorreoTelefono = (EditText) findViewById(R.id.etCorreoTelefono);
         etContrasena = (EditText) findViewById(R.id.etContrasena);
         tvIniciarSesion = (TextView) findViewById(R.id.tvIniciarSesion);
@@ -49,7 +47,7 @@ public class actIngreso extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(this, R.string.password_length_error, Toast.LENGTH_SHORT).show();
                     break;
                 }
-                User usuarioIngreso = dbDrurch.checkUserCredentialsUser(etCorreoTelefono.getText().toString().trim(), etContrasena.getText().toString().trim());
+                User usuarioIngreso = new DBHelper(this).checkUserCredentialsUser(etCorreoTelefono.getText().toString().trim(), etContrasena.getText().toString().trim());
                 if (usuarioIngreso != null) {
                     spPreferencias.guardarSesion(this, "user_id", usuarioIngreso.getId());
                     startActivity(new Intent(this, actPrincipal.class));

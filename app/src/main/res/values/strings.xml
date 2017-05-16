@@ -27,4 +27,10 @@
     <string name="create_user_error">Has occurred an error creating the user.</string>
     <string name="password_length_error">Password must have at least 8 characters.</string>
     <string name="user_password_error">Invalid username/password combination.</string>
+    <string name="current_password_field_error">You must verify your current password before changing it.</string>
+    <string name="modify_user_error">Has occurred an error updating the user.</string>
+    <string name="select_photo_source_text">Select the origin of the photo.</string>
+    <string name="gallery_text">Gallery</string>
+    <string name="camera_text">Camera</string>
+    <string name="upload_photo_error">Has occurred an error uploading the photo.</string>
 </resources>

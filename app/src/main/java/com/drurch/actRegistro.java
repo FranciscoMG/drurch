@@ -17,15 +17,13 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
 
     protected EditText etNombreRegistro, etCorreoTelefonoRegistro, etContrasenaRegistro, etRepetirContrasenaRegistro;
     protected TextView tvRegistrarse;
-    protected String uRutaFoto;
-    private DBHelper dbDrurch;
+    private String uRutaFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_registro);
 
-        dbDrurch = new DBHelper(this);
         etNombreRegistro = (EditText) findViewById(R.id.etNombreRegistro);
         etCorreoTelefonoRegistro = (EditText) findViewById(R.id.etCorreoTelefonoRegistro);
         etContrasenaRegistro = (EditText) findViewById(R.id.etContrasenaRegistro);
@@ -63,8 +61,8 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
                 return;
             }
 
-            if (dbDrurch.insertUser(etCorreoTelefonoRegistro.getText().toString().trim(), etNombreRegistro.getText().toString(), etContrasenaRegistro.getText().toString(), uRutaFoto)) {
-                User usuario = dbDrurch.checkUserCredentialsUser(etCorreoTelefonoRegistro.getText().toString().trim(), etContrasenaRegistro.getText().toString());
+            if (new DBHelper(this).insertUser(etCorreoTelefonoRegistro.getText().toString().trim(), etNombreRegistro.getText().toString(), etContrasenaRegistro.getText().toString(), uRutaFoto)) {
+                User usuario = new DBHelper(this).checkUserCredentialsUser(etCorreoTelefonoRegistro.getText().toString().trim(), etContrasenaRegistro.getText().toString());
                 if (usuario != null) {
                     spPreferencias.guardarSesion(this, "user_id", usuario.getId());
                     startActivity(new Intent(this, actPrincipal.class));

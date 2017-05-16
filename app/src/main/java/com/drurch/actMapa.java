@@ -98,7 +98,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private int getImageInt(int score) {
-        /*switch (score) {
+        switch (score) {
             case 0:
                 return R.drawable.puntuacion_0;
             case 1:
@@ -112,8 +112,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
             case 5:
                 return R.drawable.puntuacion_5;
         }
-        return R.drawable.puntuacion_5;*/
-        return 0;
+        return R.drawable.puntuacion_5;
     }
 
 }

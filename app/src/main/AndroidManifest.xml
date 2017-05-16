@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".actLista"
+            android:name=".actInicio"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -38,7 +38,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash" />
         <activity
-            android:name=".actInicio"
+            android:name=".actLista"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
