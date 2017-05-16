@@ -54,7 +54,11 @@ public class baListaLugares extends BaseAdapter {
         TextView tvInflateNombre = (TextView) convertView.findViewById(R.id.tvNombre);
         TextView tvInflateDescripcion = (TextView) convertView.findViewById(R.id.tvDescripcion);
 
-        ivInflateImagen.setImageURI(Uri.parse(""));
+        if (nodes.get(position).getType() == 1)
+            ivInflateImagen.setImageResource(R.drawable.bar_icon);
+        else
+            ivInflateImagen.setImageResource(R.drawable.iglesia_icon);
+
         tvInflateNombre.setText(nodes.get(position).getTitle());
         tvInflateDescripcion.setText(nodes.get(position).getDescription());
 
