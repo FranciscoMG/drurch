@@ -17,6 +17,7 @@ public class Comment implements Parcelable {
     private String img;
     private String user_name;
 
+
     public int getId() {
         return id;
     }

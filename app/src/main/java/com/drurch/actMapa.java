@@ -37,6 +37,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.Date;
 
+/*Clase act Mapa
+  Clase que controla al layout act_mapa.xml
+* Clase encargada de manejar lo referente a la vista del mapa*/
 public class actMapa extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -67,7 +70,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         //avoid automatically appear android keyboard when activity start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        // Inicialización de avriables
+        // Inicialización de variables
         scroll_view = BottomSheetBehavior.from(findViewById(R.id.linear_sheet));
         lista_comentarios = new ArrayList<>();
         dbHelper = new DBHelper(getApplicationContext());
@@ -79,17 +82,12 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         button_agregar = (Button)findViewById(R.id.button_agregar);
         usuarioActual = new DBHelper(this).getUser(spPreferencias.obtenerSesion(this, "user_id", -1));
 
-        // TODO: get the node id from the intent
         node_id = 0;
         if(getIntent().hasExtra("node_id")) {
             node_id = getIntent().getIntExtra("node_id", 0);
         }
 
-        //
-//        DBSeeder dbSeeder = new DBSeeder(getApplicationContext());
-//        dbSeeder.up();
-        //
-        //
+        //Verificación del nodo(posicion en mapa)
         node = new Node();
         node = dbHelper.getNode(node_id);
         if (node != null) {
@@ -102,6 +100,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
             listView_comentarios.setAdapter(adapterListaMapa);
         }
 
+        /*Agregar Comentario*/
         button_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +131,7 @@ public class actMapa extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    /*Selector de puntuación*/
     private int getImageInt(int score) {
         switch (score) {
             case 0:

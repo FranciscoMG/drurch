@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.drurch.db.DBHelper;
 import com.drurch.models.User;
 
+/*Clase actResgistro
+* Clase encargada de controlar layout act_registro.xml
+* Registra a los usuario en la aplicación*/
 public class actRegistro extends AppCompatActivity implements View.OnClickListener {
 
     protected EditText etNombreRegistro, etCorreoTelefonoRegistro, etContrasenaRegistro, etRepetirContrasenaRegistro;
@@ -33,6 +36,7 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
         tvRegistrarse.setOnClickListener(this);
     }
 
+    /*Verifica los campos del registro del usuario*/
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tvRegistrarse) {
@@ -61,6 +65,7 @@ public class actRegistro extends AppCompatActivity implements View.OnClickListen
                 return;
             }
 
+            /*Guarda la información proporcionada por el usuario*/
             if (new DBHelper(this).insertUser(etCorreoTelefonoRegistro.getText().toString().trim(), etNombreRegistro.getText().toString(), etContrasenaRegistro.getText().toString(), uRutaFoto)) {
                 User usuario = new DBHelper(this).checkUserCredentialsUser(etCorreoTelefonoRegistro.getText().toString().trim(), etContrasenaRegistro.getText().toString());
                 if (usuario != null) {

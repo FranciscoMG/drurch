@@ -8,6 +8,11 @@ import android.os.Bundle;
 import com.drurch.db.DBHelper;
 import com.drurch.db.DBSeeder;
 
+/*Clase actInicio
+  Clase que controla al layout act_inicio.xml
+* Esta clase se encarga de sembrar información en la base de datos de los bares e iglesias,
+* ademas verifica si la sesión esta activa o inactiva para dirigirlo al layout principal o al layout
+* de ingreso.*/
 public class actInicio extends AppCompatActivity {
 
     private DBHelper dbHelper;
@@ -35,6 +40,7 @@ public class actInicio extends AppCompatActivity {
                         finish();
                     }
                 }
+                /*Delay para el inicio*/
             }, 3000);
         }
     }

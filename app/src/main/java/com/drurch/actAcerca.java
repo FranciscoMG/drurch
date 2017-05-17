@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+/* Clase actAcerca
+* Clase que controla al layout act_acerca.xml
+* */
 public class actAcerca extends AppCompatActivity {
 
     private ImageView btnVolver;
@@ -17,6 +20,7 @@ public class actAcerca extends AppCompatActivity {
 
         btnVolver = (ImageView) findViewById(R.id.btnVolver);
 
+        /* Se le asigna una función de volver una ventana al botón btnVolver*/
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

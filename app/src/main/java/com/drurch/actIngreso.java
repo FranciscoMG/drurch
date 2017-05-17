@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.drurch.db.DBHelper;
 import com.drurch.models.User;
 
+/* Clase actIngreso
+* Clase que controla el layout act_ingreso.xml*/
 public class actIngreso extends AppCompatActivity implements View.OnClickListener {
 
     protected EditText etCorreoTelefono, etContrasena;
@@ -31,6 +33,7 @@ public class actIngreso extends AppCompatActivity implements View.OnClickListene
         tvRegistrarse.setOnClickListener(this);
     }
 
+    /* Controlador del inicio de sesión, verifica y valida los campos respectivos.*/
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -57,6 +60,7 @@ public class actIngreso extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             }
+            /*Referencia a la clase actRegistro para registrar el usuario*/
             case R.id.tvRegistrarse: {
                 startActivity(new Intent(this, actRegistro.class));
                 break;

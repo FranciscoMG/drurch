@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -39,6 +40,9 @@ import com.drurch.models.User;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*Clase actLista
+  Clase que controla al layout act_lista.xml
+* Esta clase se encarga de traer informacion del usuario y de los nodos.*/
 public class actLista extends AppCompatActivity implements
         AdapterView.OnItemClickListener,
         NavigationView.OnNavigationItemSelectedListener,
@@ -87,7 +91,6 @@ public class actLista extends AppCompatActivity implements
         adtLateral = new ActionBarDrawerToggle(this, dlOpciones, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         ivImagen = (ImageView) vInfoUsuario.findViewById(R.id.ivImagen);
         tvNombre = (TextView) vInfoUsuario.findViewById(R.id.tvNombre);
-//        textView_cargando = (TextView)findViewById(R.id.TextView_cargando);
         tvCorreoTelefono = (TextView) vInfoUsuario.findViewById(R.id.tvCorreoTelefono);
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
         spinner.setVisibility(View.VISIBLE);
@@ -111,7 +114,6 @@ public class actLista extends AppCompatActivity implements
         }
         //
 
-
         adtLateral.setDrawerIndicatorEnabled(true);
         dlOpciones.addDrawerListener(adtLateral);
         adtLateral.syncState();
@@ -120,10 +122,11 @@ public class actLista extends AppCompatActivity implements
         nvLateral.setNavigationItemSelectedListener(this);
 
 
+        /*Obtencion de informacion de usuario*/
         usuarioActual = new DBHelper(this).getUser(spPreferencias.obtenerSesion(this, "user_id", -1));
         if (usuarioActual != null) {
             try {
-                ivImagen.setImageBitmap(hacerCirculoImagen(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(usuarioActual.getImg()))));
+                ivImagen.setImageBitmap(hacerCirculoImagen(BitmapFactory.decodeStream(getContentResolver().openInputStream(Uri.parse(usuarioActual.getImg())))));
             } catch (Exception e) {
                 ivImagen.setImageResource(R.drawable.persona_perfil);
             }
@@ -132,6 +135,7 @@ public class actLista extends AppCompatActivity implements
         }
     }
 
+    /* Metodo para devolverse una ventana antes*/
     @Override
     public void onBackPressed() {
         if (dlOpciones.isDrawerOpen(GravityCompat.START)) {
@@ -141,6 +145,7 @@ public class actLista extends AppCompatActivity implements
         }
     }
 
+    /* Seletor de opciones*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -166,6 +171,7 @@ public class actLista extends AppCompatActivity implements
         return true;
     }
 
+    /*Trae el id de un nodo para poder mostrar sus datos*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = new Intent(actLista.this, actMapa.class);
@@ -174,6 +180,7 @@ public class actLista extends AppCompatActivity implements
     }
 
     // Locations
+    /*Revisa el estado de la locación */
     private boolean checkLocation() {
         if(!isLocationEnabled())
             showAlert();
@@ -214,6 +221,7 @@ public class actLista extends AppCompatActivity implements
         super.onPause();
         locationManager.removeUpdates(this);
     }
+    /*Toma la ubicación actual del dispositivo*/
     @Override
     public void onLocationChanged(Location location) {
         latitudeBest = location.getLatitude();
@@ -232,6 +240,7 @@ public class actLista extends AppCompatActivity implements
 
     }
 
+    /*Alerta activación*/
     @Override
     public void onProviderEnabled(String provider) {
         Toast.makeText(this, "Enabled new provider " + provider,
@@ -239,6 +248,7 @@ public class actLista extends AppCompatActivity implements
 
     }
 
+    /*Alerta para activar la locación*/
     @Override
     public void onProviderDisabled(String provider) {
         Toast.makeText(this, "Disabled provider " + provider,

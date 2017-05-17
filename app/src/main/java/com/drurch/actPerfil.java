@@ -3,6 +3,7 @@ package com.drurch;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -29,6 +30,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/*Clase actPerfil
+* Clase que controla al layout act_perfil.xml
+* Se encarga de mostrar la información del usuario*/
 public class actPerfil extends AppCompatActivity implements View.OnClickListener {
 
     protected ImageView ivImagenPerfil;
@@ -51,10 +55,11 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
         etRepetirContrasenaModificar = (EditText) findViewById(R.id.etRepetirContrasenaModificar);
         btnModificar = (TextView) findViewById(R.id.btnModificar);
 
+        /*obtención de parametro user_id para verificar usuario*/
         usuarioActual = new DBHelper(this).getUser(spPreferencias.obtenerSesion(this, "user_id", -1));
         if (usuarioActual != null) {
             try {
-                ivImagenPerfil.setImageBitmap(hacerCirculoImagen(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(usuarioActual.getImg()))));
+                ivImagenPerfil.setImageBitmap(hacerCirculoImagen(BitmapFactory.decodeStream(getContentResolver().openInputStream(Uri.parse(usuarioActual.getImg())))));
             } catch (Exception e) {
                 ivImagenPerfil.setImageResource(R.drawable.persona_perfil);
             }
@@ -66,6 +71,7 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
         btnModificar.setOnClickListener(this);
     }
 
+    /*Metodo editar y verificar informacion de usuario*/
     @Override
     public void onClick(View v) {
         String contrasenaTemp;
@@ -134,6 +140,7 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /*Metodo de seleccion de foto, trae el parametro data*/
     @Override
     public void onActivityResult(int reqCode, int resCode, Intent data) {
         if (resCode == RESULT_OK) {
@@ -141,7 +148,7 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
                 case 1:
                     uRutaFoto = String.valueOf(data.getData());
                     try {
-                        ivImagenPerfil.setImageBitmap(hacerCirculoImagen(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData())));
+                        ivImagenPerfil.setImageBitmap(hacerCirculoImagen(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()))));
                     } catch (IOException e) {
                     }
                     break;

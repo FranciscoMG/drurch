@@ -25,7 +25,8 @@ import static android.R.attr.data;
 /**
  * Created by Vinicio on 15/5/2017.
  */
-
+/*Clase AdapterListaMapa
+* Clase encargada de seleccionar y dar posición a los comentarios e imagenes dependiendo del usuario*/
 public class AdapterListaMapa extends BaseAdapter {
     Context context;
     ArrayList<Comment> comments;
@@ -35,21 +36,25 @@ public class AdapterListaMapa extends BaseAdapter {
         this.comments = comments;
     }
 
+    /*Obtener tamaño del array de comentarios*/
     @Override
     public int getCount() {
         return comments.size();
     }
 
+    /*Obtiene la posición de un comentario*/
     @Override
     public Object getItem(int position) {
         return comments.get(position);
     }
 
+    /*Obtiene la posicion de un item*/
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**/
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
@@ -60,7 +65,7 @@ public class AdapterListaMapa extends BaseAdapter {
         ImageView imageView_lista_imagen = (ImageView)convertView.findViewById(R.id.imageView_lista_imagen);
         TextView textView_lista_comment_descripcion = (TextView) convertView.findViewById(R.id.textView_lista_comment_descripcion);
 
-        // TODO: add user image
+        //Asigna una imagen a los usuarios de los comentarios
         String img = comments.get(position).getImg();
         if (img != null){
             if(img != ""){
@@ -78,7 +83,7 @@ public class AdapterListaMapa extends BaseAdapter {
             imageView_lista_imagen.setImageResource(R.drawable.persona_perfil_negro);
         }
         //
-        textView_lista_comment_descripcion.setText(comments.get(position).getId()+comments.get(position).getUser_name()+" : "+comments.get(position).getDescription());
+        textView_lista_comment_descripcion.setText(comments.get(position).getUser_name()+" : "+comments.get(position).getDescription());
 
         return convertView;
     }
