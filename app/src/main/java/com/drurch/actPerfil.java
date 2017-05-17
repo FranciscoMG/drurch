@@ -127,6 +127,10 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
                 else
                     contrasenaTemp = etContrasenaModificar.getText().toString();
 
+                if(uRutaFoto == null) {
+                    if (usuarioActual.getImg() != null)
+                        uRutaFoto = usuarioActual.getImg();
+                }
 
                 if (new DBHelper(this).updateUser(usuarioActual.getId(), usuarioActual.getEmail(), etNombreRegistro.getText().toString(), contrasenaTemp, uRutaFoto)) {
                     startActivity(new Intent(this, actPrincipal.class));
@@ -146,10 +150,12 @@ public class actPerfil extends AppCompatActivity implements View.OnClickListener
         if (resCode == RESULT_OK) {
             switch (reqCode) {
                 case 1:
-                    uRutaFoto = String.valueOf(data.getData());
-                    try {
-                        ivImagenPerfil.setImageBitmap(hacerCirculoImagen(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()))));
-                    } catch (IOException e) {
+                    if (data != null) {
+                        uRutaFoto = String.valueOf(data.getData());
+                        try {
+                            ivImagenPerfil.setImageBitmap(hacerCirculoImagen(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()))));
+                        } catch (IOException e) {
+                        }
                     }
                     break;
                 case 2:
